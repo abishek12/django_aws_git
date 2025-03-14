@@ -1,0 +1,32 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: |
+          cd /home/ubuntu/django_aws_git
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run migrations
+        run: |
+          cd /home/ubuntu/your-repo
+          source venv/bin/activate
+          python manage.py migrate
+
+      - name: Restart Gunicorn
+        run: sudo systemctl restart gunicorn
+
+      - name: Restart Nginx
+        run: sudo systemctl restart nginx
