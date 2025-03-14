@@ -20,7 +20,7 @@ jobs:
 
       - name: Run migrations
         run: |
-          cd /home/ubuntu/your-repo
+          cd /home/ubuntu/django_aws_git
           source venv/bin/activate
           python manage.py migrate
 
